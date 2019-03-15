@@ -1,6 +1,100 @@
 # python_code
 normal use python3 without specitial note
 
+---
+20190314
+ubuntu16.04 自带的python3 是python3.5的，各种问题。   
+   
+重装python3：   
+    sudo apt remove python3   # 这卸载不干净。
+安装教程参考   
+[菜鸟教程python3](http://www.runoob.com/python3/python3-install.html)
+
+Unix & Linux 平台安装 Python3:
+
+以下为在 Unix & Linux 平台上安装 Python 的简单步骤：
+
+    打开WEB浏览器访问 https://www.python.org/downloads/source/
+    选择适用于 Unix/Linux 的源码压缩包。
+    下载及解压压缩包 Python-3.x.x.tgz，3.x.x 为你下载的对应版本号。
+    如果你需要自定义一些选项修改 Modules/Setup
+
+以 Python3.6.1 版本为例：
+```
+# tar -zxvf Python-3.6.1.tgz
+# cd Python-3.6.1
+# ./configure    # 指定安装目录 $ ./configure --prefix=/usr/local/python3 --with-ssl  
+# make && make install
+```
+检查 Python3 是否正常可用：
+```
+# python3 -V
+Python 3.6.1
+```
+
+在 Unix/Linux 设置环境变量
+
+   在 ~/.bashrc 文件内新增一行
+
+    export PATH="$PATH:/usr/local/python3/bin" 
+
+注意: /usr/local/python3/bin 是 Python 执行程序的所在目录。
+
+
+```
+Collecting setuptools
+Collecting pip
+Installing collected packages: setuptools, pip
+Successfully installed pip-18.1 setuptools-40.6.2
+
+```
+
+此时，/usr/bin 下也存在一个python3，但是指向的是python3.5
+修改 /usr/bin 下的python3的软连接，让链接连接到python36 ：
+```
+cd /usr/bin
+sudo mv python3 python35
+```
+然后系统就会识别到 /usr/local/python3/bin 路径下的python3.6
+
+
+默认使用python3 而不是 python2，修改 /usr/bin 下的 python 软链接，使其指向python3.6
+```
+cd /usr/bin
+sudo mv python python_backup # 备份一下、
+sudo ln -s  /usr/local/python3/bin/python3 /usr/bin/python   # 为python3 创建软连接
+ls -l | grep # 效果如下：
+lrwxrwxrwx 1 root root   30 Mar 13 19:06 python -> /usr/local/python3/bin/python3
+```
+
+```
+$ whereis pip3  
+pip3: 
+/usr/local/bin/pip3.5 
+/usr/local/bin/pip3 
+/usr/local/python3/bin/pip3.6 
+/usr/local/python3/bin/pip3 
+/usr/share/man/man1/pip3.1.gz
+
+# 修改 /usr/bin 下的pip3
+$ cd /usr/bin
+$ sudo mv pip3 pip3_backup 
+# 
+# 修改 /usr/local/bin/ 下的pip3
+$ cd /usr/local/bin/
+$ ls
+easy_install  easy_install-3.5  pip  pip3  pip3.5
+$ sudo mv pip pip_backup
+$ sudo mv pip3 pip3_backup   
+
+# 使其只有一个pip3 ,在/usr/local/python3/bin pip3 
+
+
+```
+
+
+
+---
 
 ---
 
@@ -115,4 +209,26 @@ $ python test.py -i inputfile -o outputfile
 输入的文件为： inputfile
 输出的文件为： outputfile
 ```
+---
+
+
+
+
+
+---
+python3 使用串口 需要安装 pip36 install serial pyserial
+---
+
+
+
+
+---
+
+python36 无法使用 方向键
+
+sudo apt-get install libreadline-dev
+
+pip install readline 
+
+都无效。
 ---
